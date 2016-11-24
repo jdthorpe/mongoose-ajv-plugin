@@ -114,8 +114,7 @@ Player_schema.plugin(ajv_plugin);
 
 ```
 
-Next create a model, and some instances, and validate instances. Obviously [model.save()][validate]
-would cause the validation to occur as well.
+Next, create a model and some instances, and validate the instances. 
 
 ```JavaScript
 // Create a model from the schema
@@ -148,11 +147,13 @@ validate_promise(felix,"Felix") // promise based validation *
 >> Felix passed validation!
 
 oscar.validate(validate_callback_factory("Oscar")) // callback based validation * 
-validate(oscar,"Oscar") // promise based validation *
+validate_promise(oscar,"Oscar") // promise based validation *
 >> Oscar failed validation with message:  Player validation failed; 'contact' attribute does not match it's JSON-schema ** 
 
 ```
 \* see `convenience functions`  section below.
+
+Calling [my_model_instance.save()][validate] will cause the validation to occur as well.
 
 ### Document validation
 
