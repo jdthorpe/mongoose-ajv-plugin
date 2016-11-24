@@ -33,7 +33,7 @@ built in [`required`](validate-undefined-value) schema attribute.
 
 [validate-undefined-value]: http://mongoosejs.com/docs/api.html#schematype_SchemaType-required
 
-#### Attribute validation
+### Attribute validation
 
 Import Mongoose as usual: 
 
@@ -165,7 +165,7 @@ validate(oscar,"Oscar") // promise based validation *
 ```
 \* see `convenience functions`  section below.
 
-#### Document validation
+### Document validation
 
 Create a schema for your document
 
