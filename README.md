@@ -41,7 +41,6 @@ mongoose.plugin(require('mongoose-ajv-plugin'));
 ```
 
 
-
 Define a JSON-schema for your favorite attribute:
 
 ```JavaScript
@@ -141,7 +140,7 @@ validate_promise(felix,"Felix") // promise based validation *
 
 oscar.validate(validate_callback_factory("Oscar")) // callback based validation * 
 validate_promise(oscar,"Oscar") // promise based validation *
->> Oscar failed validation with message:  Player validation failed; 'contact' attribute does not match it's JSON-schema ** 
+>> Oscar failed validation with message:  Player validation failed; 'contact' attribute does not match it's JSON-schema 
 ```
 \* see `convenience functions`  section below.
 
