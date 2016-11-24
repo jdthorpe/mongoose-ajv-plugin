@@ -27,12 +27,10 @@ formats like [email][formats], [Date][formats], [hostname][formats], ect.
 Import Mongoose as usual: 
 
 ```JavaScript
-
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 // optional; used by the `validate_promise()` convenience function, below.
 mongoose.Promise = require('bluebird');
-
 ```
 
 When validating individual attributes, it is sufficient to load the plugin globally:
@@ -47,7 +45,6 @@ mongoose.plugin(require('mongoose-ajv-plugin'));
 Define a JSON-schema for your favorite attribute:
 
 ```JavaScript
-
 var contact_json_schema = {
 	"type":"object",
 	"properties":{
@@ -80,13 +77,11 @@ var contact_json_schema = {
 		}
 	}
 };
-
 ```
 
 Define a Mongoose schema that includes a `schema` attribute, or two:
 
 ```JavaScript
-
 // use AJV to validate fields within a document
 var Player_schema = new Schema({
 	user_name: String,
@@ -103,7 +98,6 @@ var Player_schema = new Schema({
 		schema: contact_json_schema // use AJV to validate this object
 	},
 });
-
 ```
 If you didn't load the mongoose-ajv-plugin globally , you'll need to add it to your schema now:
 
@@ -111,7 +105,6 @@ If you didn't load the mongoose-ajv-plugin globally , you'll need to add it to y
 // add the AJV plugin to the schema
 var ajv_plugin = require('mongoose-ajv-plugin')
 Player_schema.plugin(ajv_plugin);
-
 ```
 
 Next, create a model and some instances, and validate the instances. 
@@ -149,7 +142,6 @@ validate_promise(felix,"Felix") // promise based validation *
 oscar.validate(validate_callback_factory("Oscar")) // callback based validation * 
 validate_promise(oscar,"Oscar") // promise based validation *
 >> Oscar failed validation with message:  Player validation failed; 'contact' attribute does not match it's JSON-schema ** 
-
 ```
 \* see `convenience functions`  section below.
 
@@ -160,7 +152,6 @@ Calling [my_model_instance.save()][validate] will cause the validation to occur 
 Create a schema for your document
 
 ```JavaScript
-
 var team_json_schema = {
 	"type":"object",
 	"properties": {
@@ -180,7 +171,6 @@ var team_json_schema = {
 		}
 	}
 };
-
 ```
 
 Then create an Mongoose schema and add the plugin, passing the schema in the
@@ -189,20 +179,17 @@ options parameter of [Schema.plugin()][schema-plugin];
 [schema-plugin]: http://mongoosejs.com/docs/api.html#schema_Schema-plugin "Schema Plugin"
 
 ```JavaScript
-
 var Team_schema = new Schema({
 	team_name: String,
 	players: [String],
 });
 Team_schema.plugin(ajv_plugin,{schema:team_json_schema});
 var Team = mongoose.model('Team', Team_schema);
-
 ```
 
 Now Create and validate some instances:
 
 ```JavaScript
-
 var just_me = new Team({ 
 	"team_name": "Just Me",
 	"players": ["Bridget"]  // too few players
@@ -243,12 +230,10 @@ If you want to use multiple schema, you can load up your own ajv instance and
 pass it in the options parameter of [Schema.plugin()][schema-plugin]:
 
 ```JavaScript
-
 var AJV = require('ajv'),
     ajv = new AJV();
 ajv.addSchema(schema, 'mySchema');
 Team_schema.plugin(ajv_plugin,{schema: team_json_schema,ajv: ajv});
-
 ```
 
 ## Convenience Functions
