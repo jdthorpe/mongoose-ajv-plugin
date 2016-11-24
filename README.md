@@ -21,17 +21,6 @@ formats like [email][formats], [Date][formats], [hostname][formats], ect.
 
 ## Getting Started
 
-To invoke the mongoose-ajv-plugin, create a model instance and call
-`my_instance.save()` or `my_instance.validate()`.  Note that
-`mongoose-ajv-plugin`, is implemented a `model.pre('validate',...)` method,
-which, at the time of this writing, is not invoked by
-`my_instance.validateSync()`.
-
-Like internal Mongoose validators, the AJV-Mongoose plugin does
-not validate undefined values.  To require values to be defined, use the
-built in [`required`](validate-undefined-value) schema attribute.
-
-[validate-undefined-value]: http://mongoosejs.com/docs/api.html#schematype_SchemaType-required
 
 ### Attribute validation
 
@@ -233,7 +222,35 @@ validate_promise(thursday_night_poker,"Thursday Night Poker") // promise based v
 ```
 \* see `convenience functions`  section below.
 
-### Convenience Functions
+## Miscellaneous notes
+
+* Validation with the mongoose-ajv-plugin is invoked when calling
+  `my_instance.save()` or `my_instance.validate()`.  The `mongoose-ajv-plugin`,
+  is implemented as a `model.pre('validate',...)` method, which, at the time of
+  this writing, is not invoked by `my_instance.validateSync()`.
+
+* Like internal Mongoose validators, the AJV-Mongoose plugin does
+  not validate undefined values.  To require values to be defined, use the
+  built in [`required`](validate-undefined-value) schema attribute.
+
+[validate-undefined-value]: http://mongoosejs.com/docs/api.html#schematype_SchemaType-required
+
+
+## Advanced options
+
+If you want to use multiple schema, you can load up your own ajv instance and
+pass it in the options parameter of [Schema.plugin()][schema-plugin]:
+
+```JavaScript
+
+var AJV = require('ajv'),
+    ajv = new AJV();
+ajv.addSchema(schema, 'mySchema');
+Team_schema.plugin(ajv_plugin,{schema: team_json_schema,ajv: ajv});
+
+```
+
+## Convenience Functions
 
 ```JavaScript
 function validate_callback_factory(name){
@@ -253,20 +270,6 @@ function validate_promise (data,name){
 			console.log(name +" failed validation with message:  " + err.message);
 		})
 }
-```
-
-### Advanced options
-
-If you want to use multiple schema, you can load up your own ajv instance and
-pass it in the options parameter of [Schema.plugin()][schema-plugin]:
-
-```JavaScript
-
-var AJV = require('ajv'),
-    ajv = new AJV();
-ajv.addSchema(schema, 'mySchema');
-Team_schema.plugin(ajv_plugin,{schema: team_json_schema,ajv: ajv});
-
 ```
 
 
