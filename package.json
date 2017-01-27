@@ -1,6 +1,6 @@
 {
   "name": "mongoose-ajv-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AJV plugin for Mongoose",
   "main": "index.js",
   "scripts": {
