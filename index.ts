@@ -49,8 +49,8 @@ function ajv_plugin (schema, options) {
             // APPLY THE ATTRIBUTE SCHEMA
             for(var key in schemata){
                 if(data[key] === undefined){
-                    // use the existing `required` validator for validating the presence of the attribute
-                    return;
+                    // use the Mongoose `required` validator for validating the presence of the attribute
+                    continue
                 }
                 if(!schemata[key](data[key])){
                     var error = new ValidationError(data);
@@ -60,9 +60,9 @@ function ajv_plugin (schema, options) {
                     return next(error);
                 }
             }
-            next();
+            return next();
         }catch(err){
-            next(err);
+            return next(err);
         }
 	})
 
