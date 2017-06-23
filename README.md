@@ -42,7 +42,7 @@ var Contact_schema = new mongoose.Schema({
 });
 ```
 
-Or use AJV to validate one or more attributes of a document using the "ajv-schema" option:
+Or use AJV to validate one or more attributes of a document using the `"ajv-schema"` option:
 
 ```JavaScript
 // use AJV to validate fields within a document
@@ -65,12 +65,13 @@ var Player_schema = new Schema({
 });
 ```
 
-## Using AJV Extension Modules
+## Using AJV Extensions
 
 If you wish to extend the Ajv instance used for validation with additional
 [schemata](https://github.com/epoberezkin/ajv#addschemaarrayobjectobject-schema--string-key), 
 [formats](https://github.com/epoberezkin/ajv#addformatstring-name-stringregexpfunctionobject-format), 
-or [keywords](https://github.com/epoberezkin/ajv#api-addkeyword), you can provide your own instance, like so: 
+or [keywords](https://github.com/epoberezkin/ajv#api-addkeyword), you can
+pass your own ajv instance, to the plugin like so: 
 
 ```JavaScript
 // create an Ajv instance
