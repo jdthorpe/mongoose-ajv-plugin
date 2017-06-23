@@ -71,7 +71,7 @@ If you wish to extend the Ajv instance used for validation with additional
 [schemata](https://github.com/epoberezkin/ajv#addschemaarrayobjectobject-schema--string-key), 
 [formats](https://github.com/epoberezkin/ajv#addformatstring-name-stringregexpfunctionobject-format), 
 or [keywords](https://github.com/epoberezkin/ajv#api-addkeyword), you can
-pass your own ajv instance, to the plugin like so: 
+pass your own (extended) ajv instance to the plugin, like so: 
 
 ```JavaScript
 // create an Ajv instance
