@@ -34,11 +34,11 @@ so:
 
 ```JavaScript
 var Contact_schema = new mongoose.Schema({
-	"name": String ,
-	"email": String,
-	"birthday": String, 		
-	// let AJV validate this entire document
-	"ajv-schema": ajv_contact_schema 
+    "name": String ,
+    "email": String,
+    "birthday": String,
+    // let AJV validate this entire document
+    "ajv-schema": ajv_contact_schema 
 });
 ```
 
@@ -47,21 +47,21 @@ Or use AJV to validate one or more attributes of a document using the "ajv-schem
 ```JavaScript
 // use AJV to validate fields within a document
 var Player_schema = new Schema({
-	"user_name": String,
-	"rank": Number,
-	"ip_address": { 
-		"type": String, 
-		// let AJV validate this string attribute
-		"ajv-schema": { 
-			"type": 'string',  
-			"format": 'ipv4'  /
-		} 
-	},
-	"contact-info": {
-		"type": Schema.Types.Mixed ,
-		// let AJV validate this nested object
-		"ajv-schema": contact_json_schema 
-	},
+    "user_name": String,
+    "rank": Number,
+    "ip_address": { 
+        "type": String, 
+        // let AJV validate this string attribute
+        "ajv-schema": { 
+            "type": 'string',
+            "format": 'ipv4'  /
+        } 
+    },
+    "contact-info": {
+        "type": Schema.Types.Mixed ,
+        // let AJV validate this nested object
+        "ajv-schema": contact_json_schema 
+    },
 });
 ```
 
@@ -102,35 +102,35 @@ above examples:
 
 ```JavaScript
 var ajv_contact_schema = {
-	"type":"object",
-	"properties":{
-	   	"name": {
-			"type":"string"
-		},
-	   	"email": {
-			"type":"string",
-			"fomrat":"email"
-		},
-	   	"birthday": {
-			"oneOf":[
-				{"$ref":"#/definitions/date"},
-				{"$ref":"#/definitions/date-time"}
-			]
-		}
-	},
-	"required":[
-		"name",
-		"email"
-	],
-	"definitions":{
-		"date":{
-			"type":"string",
-			"format":"date"
-		},
-		"date-time":{
-			"type":"string",
-			"format":"date-time"
-		}
-	}
+    "type":"object",
+    "properties":{
+        "name": {
+            "type":"string"
+        },
+        "email": {
+            "type":"string",
+            "fomrat":"email"
+        },
+        "birthday": {
+            "oneOf":[
+                {"$ref":"#/definitions/date"},
+                {"$ref":"#/definitions/date-time"}
+            ]
+        }
+    },
+    "required":[
+        "name",
+        "email"
+    ],
+    "definitions":{
+        "date":{
+            "type":"string",
+            "format":"date"
+        },
+        "date-time":{
+            "type":"string",
+            "format":"date-time"
+        }
+    }
 };
 ```
