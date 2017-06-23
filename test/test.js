@@ -1,21 +1,23 @@
+"use strict";
 // --------------------------------------------------------------------------------
 // Programmer: Jason Thorpe
 // Language:   typescript
 // Purpose:    mocha testing 
 // Comments:   
 // --------------------------------------------------------------------------------
-"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /// <reference path="../typings/node/node.d.ts" />
 /// <reference path="../typings/chai/chai.d.ts" />
 /// <reference path="../typings/mocha/mocha.d.ts" />
-var chai = require('chai');
+var chai = require("chai");
 var expect = chai.expect;
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 var Schema = mongoose.Schema;
 var ajv_plugin = require('../index');
+mongoose.plugin(ajv_plugin);
 var AJV = require('ajv'), ajv = new AJV();
-ajv.validate({ type: "string", format: "ipv4" }, "123.4.5.789");
+ajv.validate({ "type": "string", "format": "ipv4" }, "123.4.5.789");
 //------------------------------
 // define an AJV JSONschema: 
 //------------------------------
@@ -81,61 +83,62 @@ describe("Schemas", function () {
 // ----------------------------------------
 // use AJV to validate fields within a document
 var Player_schema = new Schema({
-    user_name: String,
-    rank: Number,
-    ip_address: {
-        type: String,
-        schema: {
-            type: 'string',
-            format: 'ipv4' // AJV convenience String Format
+    "user_name": String,
+    "rank": Number,
+    "ip_address": {
+        "type": String,
+        "ajv-schema": {
+            "type": 'string',
+            "format": 'ipv4' // AJV convenience String Format
         }
     },
-    contact: {
-        type: Schema.Types.Mixed,
-        schema: contact_json_schema // use AJV to validate this object
+    "contact": {
+        "type": Schema.Types.Mixed,
+        "ajv-schema": contact_json_schema // use AJV to validate this object
     },
 });
 // add the AJV plugin to the schema
-Player_schema.plugin(ajv_plugin);
+//-- Player_schema.plugin(ajv_plugin);
 // Create a model from the schema
 var Player = mongoose.model('Player', Player_schema);
 var Team_schema = new Schema({
-    team_name: String,
-    players: [String],
+    "team_name": String,
+    "players": [String],
+    "ajv-schema": team_json_schema,
 });
-Team_schema.plugin(ajv_plugin, { schema: team_json_schema });
+//-- Team_schema.plugin(ajv_plugin);
 var Team = mongoose.model('Team', Team_schema);
 // ----------------------------------------
 // build the model instances
 // ----------------------------------------
 var valid_attrs = new Player({
-    user_name: "Felix",
-    rank: 5,
-    ip_address: "123.45.67.89",
-    contact: {
-        name: "Jack",
-        email: "plaza626@email.com",
-        birthday: "1925-02-08"
+    "user_name": "Felix",
+    "rank": 5,
+    "ip_address": "123.45.67.89",
+    "contact": {
+        "name": "Jack",
+        "email": "plaza626@email.com",
+        "birthday": "1925-02-08"
     }
 });
 var invalid_string_attribute = new Player({
-    user_name: "Oscar",
-    rank: 7,
-    ip_address: "123.4.5.678",
-    contact: {
-        name: "Walter",
-        email: "RedWingsFan@poker.com",
-        birthday: "1920-10-01" // invalid date format format
+    "user_name": "Oscar",
+    "rank": 7,
+    "ip_address": "123.4.5.678",
+    "contact": {
+        "name": "Walter",
+        "email": "RedWingsFan@poker.com",
+        "birthday": "1920-10-01" // invalid date format format
     },
 });
 var invalid_object_attribute = new Player({
-    user_name: "Oscar",
-    rank: 7,
-    ip_address: "123.45.67.89",
-    contact: {
-        name: "Walter",
-        email: "RedWingsFan@poker.com",
-        birthday: "October 1, 1920" // invalid date format format
+    "user_name": "Oscar",
+    "rank": 7,
+    "ip_address": "123.45.67.89",
+    "contact": {
+        "name": "Walter",
+        "email": "RedWingsFan@poker.com",
+        "birthday": "October 1, 1920" // invalid date format format
     },
 });
 var invalid_doc = new Team({
