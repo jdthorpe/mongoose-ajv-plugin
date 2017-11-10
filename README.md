@@ -81,7 +81,7 @@ var ajv = new Ajv();
 // add custom schema, keywords, or formats
 ajv.addSchema(...);
 // or 
-ajv.addKewword(...)
+ajv.addKeyword(...)
 // or 
 ajv.addFormat(...)
 // or 
